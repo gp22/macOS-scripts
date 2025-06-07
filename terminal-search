@@ -1,0 +1,40 @@
+#!/bin/bash
+clear
+COLUMNS=12
+PS3='Selection: '
+options=(
+"Search File Names (Root)" 
+"Search File Names (Documents)" 
+"Search Content (Documents)" 
+"Search Size"
+)
+select opt in "${options[@]}"
+do
+case $opt in
+"Search File Names (Root)")
+echo "Enter Term: "
+read data
+find / -print 2>/dev/null | grep -i $data
+;;
+"Search File Names (Documents)")
+echo "Enter Term: "
+read data
+find ~/Documents/ | grep -i $data
+;;
+"Search Content (Documents)")
+cd ~/Documents/Documents
+echo "Enter Term: "
+read data
+rg -aFiN $data
+;;
+"Search Size")
+cd /
+echo "Enter Size in GB: "
+read data
+sudo find . -size +"$data"G -exec du -h {} \;
+;;
+esac
+done
+
+
+
